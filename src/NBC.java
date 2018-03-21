@@ -14,6 +14,8 @@ public class NBC {
 	private static int targetAttr;
 	private static List<String> possibleAttr;
 	
+	private static String trainFile; // The name of the training file, used for error prevention so the test and train files aren't the same
+	
 	public static void main(String[] args) {
 		possibleAttr = new ArrayList<String>();
 		greeting();
@@ -87,15 +89,31 @@ public class NBC {
 		Scanner in = new Scanner(System.in);
 		String input = in.nextLine();
 		loadedData = loadData(input);
+		// Recording the name of the training file
+		trainFile = input;
 		
 		return loadedData;
 	}
 	// Requests and gets the testing file
 	public static List<List<String>> loadTestFile() {
 		List<List<String>> loadedData = new ArrayList<List<String>>();
-		System.out.print("Please enter a testing file: ");
 		Scanner in = new Scanner(System.in);
-		String input = in.nextLine();
+		// Error handling to ensure the file isn't the same as the trainer
+		String input = "";
+		int reloop;
+		do {
+			reloop = 0;
+			System.out.print("Please enter a testing file: ");
+			input = in.nextLine();
+			
+			// Ensuring the names don't match
+			if(input.equals(trainFile)) {
+				System.out.println("Error: The test file: \"" + input + "\" must not be the same as the training file.");
+				reloop++;
+			}
+			
+		} while (reloop != 0);
+		
 		loadedData = loadData(input);
 		
 		return loadedData;

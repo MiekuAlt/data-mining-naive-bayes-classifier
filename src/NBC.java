@@ -25,6 +25,9 @@ public class NBC {
 		possibleAttr = removeDups(possibleAttr);
 		targetAttr = chooseAttr();
 
+		// TODO: Remove me, Just for Greg to see how the data currently is built
+		printTable(trainDataSt, "Train Data");
+		printTable(testDataSt, "Test Data");
 	}
 
 	// Displays for the user the different attribute options, asks them to choose one
@@ -161,13 +164,27 @@ public class NBC {
 	}
 	
 	// Removes duplicates from a list of strings, this was recycled from Ass3
-		private static List<String> removeDups(List<String> withDups) {
-			// This is derived from an example here https://stackoverflow.com/questions/203984/how-do-i-remove-repeated-elements-from-arraylist
-			Set<String> hs = new HashSet<>();
-			hs.addAll(withDups);
-			List<String> uniques = new ArrayList<String>();
-			uniques.addAll(hs);
-			
-			return uniques;
+	private static List<String> removeDups(List<String> withDups) {
+		// This is derived from an example here https://stackoverflow.com/questions/203984/how-do-i-remove-repeated-elements-from-arraylist
+		Set<String> hs = new HashSet<>();
+		hs.addAll(withDups);
+		List<String> uniques = new ArrayList<String>();
+		uniques.addAll(hs);
+		
+		return uniques;
+	}
+	
+	// TODO: Remove this, for testing only
+	private static void printTable(List<List<String>> data, String tableName) {
+		System.out.println("+--------------------------------------+");
+		System.out.println("Table: " + tableName);
+		System.out.println("+--------------------------------------+");
+		for(int r = 0; r < data.size(); r++) {
+			for(int c = 0; c < data.get(r).size(); c++) {
+				System.out.print(data.get(r).get(c) + " ");
+			}
+			System.out.println("");
 		}
+		System.out.println("+--------------------------------------+");
+	}
 }

@@ -1,5 +1,8 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -28,6 +31,34 @@ public class NBC {
 		// TODO: Remove me, Just for Greg to see how the data currently is built
 		printTable(trainDataSt, "Train Data");
 		printTable(testDataSt, "Test Data");
+		writeResult("Hello World!");
+	}
+	
+	// Writes the input string to a file called Result.txt
+	private static void writeResult(String result) {
+		BufferedWriter bw = null;
+		try {
+            File outPut = new File("Result.txt");
+            if (!outPut.exists()) {
+                outPut.createNewFile();
+            }
+            FileWriter fw = new FileWriter(outPut);
+            bw = new BufferedWriter(fw);
+            bw.write(result);
+
+        } catch(Exception e) {
+            System.out.println("Error outputting the rules.");
+            System.out.println(e);
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                    System.out.println("The result is in the file \'Result.txt\'.");
+                }
+            } catch(Exception e) {
+                System.out.println("Error closing the writer.");
+            }
+        }
 	}
 
 	// Displays for the user the different attribute options, asks them to choose one

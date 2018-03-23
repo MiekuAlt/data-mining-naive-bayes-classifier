@@ -1,0 +1,42 @@
+README file for assignment 5, Naive Bayes Programming
+CSCI 4144 Assignment 5
+Greg Mailman B00695833
+Michael Altair B00599791
+
+This program implements Naive Bayes to predict class attributes using a training and a testing set.
+
+Compiling) 
+The program can be compiled using javac as per the example.
+1) Place the data files alongside NBC.java.
+2) run javac NBC.java in the terminal
+3) run java NBC
+
+Once the program runs you will be prompted to select two files, one for training and one for testing. Input the local file paths.
+After reading in the files it will then ask you to select an attribute as the target
+input a number between 0-n as indicated.
+
+The program only has one supporting file for the main file. The main file sends data to the supporting file, which runs the algorithm returns a string, which is then pushed to an output file.
+
+TODO: michael
+NBC.java has the following methods (This is the main file)
+
+Bayes.java has the following methods: 
+public static String Bayes(List<List<Integer>> training, List<List<Integer>> testing, List<List<String>> labels, int classifier)
+public static List<Double> BuildTargetProbability(List<List<Integer>> input, List<List<String>> labels, int n)
+public static List<List<List<Double>>> BuildClassProbability(List<List<Integer>> input, List<List<String>> labels, int n)
+public static String findPrediction(List<List<List<Double>>> classProbs, List<Double> targetProbs, List<List<Integer>> input, List<List<String>> labels, int n)
+
+A much lower accuracy was gained, but was never fixed.
+
+Overall flow) 
+NBC.java reads in both files' data and places each in its own List<List<Integer>> object, while simultaneously creating a List<List<String>> object to hold the labels.
+These are all handed, along with an integer indicating the target attribute, to Bayes.java.
+Bayes.java uses the training data list to build new lists that contain the probability of the target attribute alone, and the conditional probability of every other attributed related to the target attribute.
+Using these lists it goes through each row of the testing data list and predicts what the target class should be, counting how accurate it is.
+It returns a string that contains all its predictions and the accuracy, which is then placed in an external file by NBC.java.
+
+Task partition) 
+Michael: File input and formatting, error checking, file output.
+Greg: Naive Bayes algorithm,  README, output formatting.
+
+

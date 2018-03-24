@@ -19,6 +19,7 @@ The program only has one supporting file for the main file. The main file sends 
 
 NBC.java has the following methods (This is the main file):
 public static void main(String[] args)
+private static List<List<Integer>> fixData(List<List<Integer>> input)
 private static void writeResult(String result) 
 private static List<List<Integer>> convertDataTable(List<List<String>> dataStrings)
 private static void genLabels(List<List<String>> dataStrings)

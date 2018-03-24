@@ -44,9 +44,26 @@ public class NBC {
 		printIntTable(trainData, "Train Data");
 		//printIntTable(testData, "Train Data"); 
 		printTable(dataLabels, "Data Labels");
+		//flips the data around to work.
+		List<List<Integer>> fixedTrainingData = fixData(trainData);
+		List<List<Integer>> fixedTestData = fixData(testData);
 		
-		String result = Bayes.Bayes(trainData, testData, dataLabels, targetAttr);
+		String result = Bayes.Bayes(fixedTrainingData, fixedTestData, dataLabels, targetAttr);
 		writeResult(result);
+	}
+
+	//formats the data into the expected layout before its sent to bayes
+	private static List<List<Integer>> fixData(List<List<Integer>> input) {
+		List<List<Integer>> fixedData = new ArrayList<>();
+		for(int i=0; i<input.get(0).size(); i++) {
+			fixedData.add(new ArrayList<>());
+		}
+		for(int i=0; i<input.size(); i++) {
+			for(int j=0; j<input.get(0).size(); j++) {
+				fixedData.get(j).add(input.get(i).get(j)-1);
+			}
+		}
+		return fixedData;
 	}
 	
 	// Writes the input string to a file called Result.txt

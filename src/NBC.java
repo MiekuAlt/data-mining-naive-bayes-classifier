@@ -14,13 +14,21 @@ public class NBC {
 
 	public static List<List<String>> trainDataSt;
 	public static List<List<String>> testDataSt;
-	private static int targetAttr;
 	private static List<String> possibleAttr;
+	
+	// Data to be used by the Bayes algorithm
+	private static List<List<String>> dataLabels;
+	private static List<List<Integer>> trainData;
+	private static List<List<Integer>> testData;
+	private static int targetAttr;
 	
 	private static String trainFile; // The name of the training file, used for error prevention so the test and train files aren't the same
 	
 	public static void main(String[] args) {
 		possibleAttr = new ArrayList<String>();
+		trainData = new ArrayList<List<Integer>>();
+		testData = new ArrayList<List<Integer>>();
+		
 		greeting();
 		trainDataSt = loadTrainingFile();
 		testDataSt = loadTestFile();
@@ -28,10 +36,20 @@ public class NBC {
 		possibleAttr = removeDups(possibleAttr);
 		targetAttr = chooseAttr();
 
+		genLabels(trainDataSt);
+		trainData = convertDataTable(trainDataSt);
+		testData = convertDataTable(testDataSt);
+		
+		/*
 		// TODO: Remove me, Just for Greg to see how the data currently is built
 		printTable(trainDataSt, "Train Data");
 		printTable(testDataSt, "Test Data");
-		writeResult("Hello World!");
+		
+		printIntTable(trainData, "Train Data");
+		printIntTable(testData, "Train Data"); */
+		
+		String result = Bayes.Bayes(trainData, testData, dataLabels, targetAttr);
+		writeResult(result);
 	}
 	
 	// Writes the input string to a file called Result.txt
@@ -60,7 +78,67 @@ public class NBC {
             }
         }
 	}
+	
+	// Converts the data table of strings into one of integers based on the different data label's indexes
+	// Ass4's code was adapted and recycled for this method
+	private static List<List<Integer>> convertDataTable(List<List<String>> dataStrings) {
+		List<List<Integer>> dataInts = new ArrayList<List<Integer>>();
+		
+		// Converting the strings of data to be ints for easier data tree access based on its dataLabel index
+		for(int r = 0; r < dataStrings.size(); r++) {
+			List<Integer> curRow = new ArrayList<Integer>();
+			for(int c = 0; c < dataStrings.get(r).size(); c++) {
+				if(!dataStrings.get(r).get(c).equals("")) {
+					for(int i = 0; i < dataLabels.get(c).size(); i++) {
+						if(dataStrings.get(r).get(c).equals(dataLabels.get(c).get(i))) {
+							curRow.add(i);
+						}
+					}
+				}
+			}
+			if(curRow.size() > 0)
+				dataInts.add(curRow);
+		}	
+		
+		return dataInts;
+	}
 
+	// Generates the labels to be used when assigning ints to the data strings
+	// Ass4's code was adapted and recycled for this method
+	private static void genLabels(List<List<String>> dataStrings) {
+		dataLabels = new ArrayList<List<String>>();
+		
+		// Compiling all the possible labels
+		// Rotating table
+		String[][] flipTable = new String[dataStrings.get(0).size()][dataStrings.size()];
+		
+		for(int r = 0; r < dataStrings.size(); r++) {	
+			for(int c = 0; c < dataStrings.get(r).size(); c++) {
+				flipTable[c][r] = dataStrings.get(r).get(c);
+			}
+		}
+		
+		for(int r = 0; r < flipTable.length; r++) {
+			List<String> col = new ArrayList<String>();
+			for(int c = 0; c < flipTable[r].length; c++) {
+				if(flipTable[r][c] != null) {
+					if(!flipTable[r][c].equals("")) {
+						col.add(flipTable[r][c]);
+					}
+				}
+			}
+			dataLabels.add(col);
+		}
+		
+		List<List<String>> dataLabelsNoDup = new ArrayList<List<String>>();
+		for(int r = 0; r < dataLabels.size(); r++) {
+			dataLabelsNoDup.add(removeDups(dataLabels.get(r)));
+			dataLabelsNoDup.get(r).add(0, possibleAttr.get(r));
+		}
+		
+		dataLabels = dataLabelsNoDup;
+	}
+	
 	// Displays for the user the different attribute options, asks them to choose one
 	// Re-purposed from Ass4
 	private static int chooseAttr() {
@@ -207,6 +285,18 @@ public class NBC {
 	
 	// TODO: Remove this, for testing only
 	private static void printTable(List<List<String>> data, String tableName) {
+		System.out.println("+--------------------------------------+");
+		System.out.println("Table: " + tableName);
+		System.out.println("+--------------------------------------+");
+		for(int r = 0; r < data.size(); r++) {
+			for(int c = 0; c < data.get(r).size(); c++) {
+				System.out.print(data.get(r).get(c) + " ");
+			}
+			System.out.println("");
+		}
+		System.out.println("+--------------------------------------+");
+	}
+	private static void printIntTable(List<List<Integer>> data, String tableName) {
 		System.out.println("+--------------------------------------+");
 		System.out.println("Table: " + tableName);
 		System.out.println("+--------------------------------------+");

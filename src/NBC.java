@@ -194,8 +194,7 @@ public class NBC {
 	}
 	
 	// Requests and gets the training file
-	public static List<List<String>> loadTrainingFile()
-	{
+	public static List<List<String>> loadTrainingFile() {
 		List<List<String>> loadedData = new ArrayList<List<String>>();
 		System.out.print("Please enter a training file: ");
 		Scanner in = new Scanner(System.in);

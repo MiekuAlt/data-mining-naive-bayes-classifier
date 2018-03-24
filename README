@@ -6,7 +6,7 @@ Michael Altair B00599791
 This program implements Naive Bayes to predict class attributes using a training and a testing set.
 
 Compiling) 
-The program can be compiled using javac as per the example.
+The program can be compiled using javac.
 1) Place the data files alongside NBC.java.
 2) run javac NBC.java in the terminal
 3) run java NBC
@@ -15,10 +15,19 @@ Once the program runs you will be prompted to select two files, one for training
 After reading in the files it will then ask you to select an attribute as the target
 input a number between 0-n as indicated.
 
-The program only has one supporting file for the main file. The main file sends data to the supporting file, which runs the algorithm returns a string, which is then pushed to an output file.
+The program only has one supporting file for the main file. The main file sends data to the supporting file, which runs the algorithm and returns a string, which is then pushed to an output file.
 
-TODO: michael
-NBC.java has the following methods (This is the main file)
+NBC.java has the following methods (This is the main file):
+public static void main(String[] args)
+private static void writeResult(String result) 
+private static List<List<Integer>> convertDataTable(List<List<String>> dataStrings)
+private static void genLabels(List<List<String>> dataStrings)
+private static int chooseAttr()
+public static void greeting()
+public static List<List<String>> loadTrainingFile()
+public static List<List<String>> loadTestFile()
+public static List<List<String>> loadData(String filename)
+private static List<String> removeDups(List<String> withDups)
 
 Bayes.java has the following methods: 
 public static String Bayes(List<List<Integer>> training, List<List<Integer>> testing, List<List<String>> labels, int classifier)

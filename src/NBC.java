@@ -25,28 +25,25 @@ public class NBC {
 	private static String trainFile; // The name of the training file, used for error prevention so the test and train files aren't the same
 	
 	public static void main(String[] args) {
-		possibleAttr = new ArrayList<String>();
+		//possibleAttr = new ArrayList<String>();
 		trainData = new ArrayList<List<Integer>>();
 		testData = new ArrayList<List<Integer>>();
 		
 		greeting();
 		trainDataSt = loadTrainingFile();
 		testDataSt = loadTestFile();
-		// Removing the duplicates generated in the possible attributes
-		possibleAttr = removeDups(possibleAttr);
 		targetAttr = chooseAttr();
-
+		dataLabels = new ArrayList<List<String>>();
 		genLabels(trainDataSt);
 		trainData = convertDataTable(trainDataSt);
 		testData = convertDataTable(testDataSt);
 		
-		/*
 		// TODO: Remove me, Just for Greg to see how the data currently is built
 		printTable(trainDataSt, "Train Data");
-		printTable(testDataSt, "Test Data");
-		
+		//printTable(testDataSt, "Test Data");
 		printIntTable(trainData, "Train Data");
-		printIntTable(testData, "Train Data"); */
+		//printIntTable(testData, "Train Data"); 
+		printTable(dataLabels, "Data Labels");
 		
 		String result = Bayes.Bayes(trainData, testData, dataLabels, targetAttr);
 		writeResult(result);
@@ -106,7 +103,7 @@ public class NBC {
 	// Generates the labels to be used when assigning ints to the data strings
 	// Ass4's code was adapted and recycled for this method
 	private static void genLabels(List<List<String>> dataStrings) {
-		dataLabels = new ArrayList<List<String>>();
+		//dataLabels = new ArrayList<List<String>>();
 		
 		// Compiling all the possible labels
 		// Rotating table
@@ -135,7 +132,7 @@ public class NBC {
 			dataLabelsNoDup.add(removeDups(dataLabels.get(r)));
 			dataLabelsNoDup.get(r).add(0, possibleAttr.get(r));
 		}
-		
+
 		dataLabels = dataLabelsNoDup;
 	}
 	
@@ -233,6 +230,7 @@ public class NBC {
 	// Loads the requested data
 	public static List<List<String>> loadData(String filename) {
 		List<List<String>> loadedData = new ArrayList<List<String>>();
+		possibleAttr = new ArrayList<String>();
 		
 		BufferedReader br = null;
 		try {

@@ -25,7 +25,7 @@ public class NBC {
 	private static String trainFile; // The name of the training file, used for error prevention so the test and train files aren't the same
 	
 	public static void main(String[] args) {
-		//possibleAttr = new ArrayList<String>();
+
 		trainData = new ArrayList<List<Integer>>();
 		testData = new ArrayList<List<Integer>>();
 		
@@ -37,13 +37,7 @@ public class NBC {
 		genLabels(trainDataSt);
 		trainData = convertDataTable(trainDataSt);
 		testData = convertDataTable(testDataSt);
-		
-		// TODO: Remove me, Just for Greg to see how the data currently is built
-		printTable(trainDataSt, "Train Data");
-		//printTable(testDataSt, "Test Data");
-		printIntTable(trainData, "Train Data");
-		//printIntTable(testData, "Train Data"); 
-		printTable(dataLabels, "Data Labels");
+
 		//flips the data around to work.
 		List<List<Integer>> fixedTrainingData = fixData(trainData);
 		List<List<Integer>> fixedTestData = fixData(testData);
@@ -119,9 +113,7 @@ public class NBC {
 
 	// Generates the labels to be used when assigning ints to the data strings
 	// Ass4's code was adapted and recycled for this method
-	private static void genLabels(List<List<String>> dataStrings) {
-		//dataLabels = new ArrayList<List<String>>();
-		
+	private static void genLabels(List<List<String>> dataStrings) {	
 		// Compiling all the possible labels
 		// Rotating table
 		String[][] flipTable = new String[dataStrings.get(0).size()][dataStrings.size()];
@@ -295,31 +287,5 @@ public class NBC {
 		uniques.addAll(hs);
 		
 		return uniques;
-	}
-	
-	// TODO: Remove this, for testing only
-	private static void printTable(List<List<String>> data, String tableName) {
-		System.out.println("+--------------------------------------+");
-		System.out.println("Table: " + tableName);
-		System.out.println("+--------------------------------------+");
-		for(int r = 0; r < data.size(); r++) {
-			for(int c = 0; c < data.get(r).size(); c++) {
-				System.out.print(data.get(r).get(c) + " ");
-			}
-			System.out.println("");
-		}
-		System.out.println("+--------------------------------------+");
-	}
-	private static void printIntTable(List<List<Integer>> data, String tableName) {
-		System.out.println("+--------------------------------------+");
-		System.out.println("Table: " + tableName);
-		System.out.println("+--------------------------------------+");
-		for(int r = 0; r < data.size(); r++) {
-			for(int c = 0; c < data.get(r).size(); c++) {
-				System.out.print(data.get(r).get(c) + " ");
-			}
-			System.out.println("");
-		}
-		System.out.println("+--------------------------------------+");
 	}
 }

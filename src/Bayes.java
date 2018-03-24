@@ -1,12 +1,8 @@
-import java.io.File;
 import java.util.ArrayList;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.util.List;
 
-
 public final class Bayes {
-    //takes in the input and builds a string of the outpit to return.
+    //takes in the input and builds a string of the output to return.
     public static String Bayes(List<List<Integer>> training, List<List<Integer>> testing, List<List<String>> labels, int classifier) {
         List<Double> targetProbs = BuildTargetProbability(training, labels, classifier);
         List<List<List<Double>>> conditionalProbs = BuildClassProbability(training, labels, classifier);
